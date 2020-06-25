@@ -9,9 +9,11 @@ const getCuit = (req, res) =>{
     .then(data=>{
       res.send(data);
     })
-
   }catch (e){
-
+    res.json({
+      status: 'error',
+      message:'Error al realizar la consulta'
+    })
   }
 }
 
