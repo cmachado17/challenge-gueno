@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-const BarraBusqueda = ({ setCuit }) => {
+const BarraBusqueda = ({ setDatos, setCargando }) => {
   //Estado de valor a buscar
   const [id, setId] = useState("");
 
@@ -17,12 +17,16 @@ const BarraBusqueda = ({ setCuit }) => {
   const handleEnviarConsulta = (e) => {
     e.preventDefault();
 
+    //mostrar spinner
+    setCargando(true);
+    //vaciar busqueda anterior
+    setDatos(null);
     //realiza la consulta por si existe o no el cuit
     try {
       fetch(url + "get-cuit/" + id)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data.data.cuit);
+          console.log(data);
           if (data.success) {
             let cuit = data.data.cuit;
             //Si existe el cuit, realizar la peticion de los datos
@@ -30,18 +34,24 @@ const BarraBusqueda = ({ setCuit }) => {
               fetch(url + "get-info/" + cuit)
                 .then((response) => response.json())
                 .then((data) => {
-                  setCuit(data);
+                  //enviar los datos para mostrar
+                  setDatos(data.data);
+                  //resetear form
+                  setId("");
                 });
             } catch (e) {
               console.log(e);
             }
           } else if (!data.success) {
-            alert(data.message);
+            setDatos(data.message);
           }
         });
     } catch (e) {
       console.log(e);
     }
+    setTimeout(() => {
+      setCargando(false);
+    }, 3000);
     //alert(id);
   };
 

@@ -5,3 +5,7 @@ body{
 .border-redondeado{
     border-radius: 1rem;
 }
+
+.main{
+    height: 100%;
+}
