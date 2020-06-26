@@ -48,14 +48,14 @@ const BarraBusqueda = ({ setDatos, setCargando, setCuit }) => {
                   setDatos(data.data);
                 });
             } catch (e) {
-              console.log(e);
+             alert('Error al realizar la petición');
             }
           } else if (!data.success) {
             setDatos(data.message);
           }
         });
     } catch (e) {
-      console.log(e);
+      alert('Error al realizar la petición');
     }
     setTimeout(() => {
       setCargando(false);
