@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-const BarraBusqueda = ({ setDatos, setCargando }) => {
+const BarraBusqueda = ({ setDatos, setCargando, setCuit }) => {
   //Estado de valor a buscar
   const [id, setId] = useState("");
 
@@ -26,18 +26,17 @@ const BarraBusqueda = ({ setDatos, setCargando }) => {
       fetch(url + "get-cuit/" + id)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
           if (data.success) {
             let cuit = data.data.cuit;
+            setCuit(cuit);
             //Si existe el cuit, realizar la peticion de los datos
             try {
               fetch(url + "get-info/" + cuit)
                 .then((response) => response.json())
                 .then((data) => {
                   //enviar los datos para mostrar
+
                   setDatos(data.data);
-                  //resetear form
-                  setId("");
                 });
             } catch (e) {
               console.log(e);

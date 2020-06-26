@@ -7,15 +7,16 @@ import Spinner from "./components/Spinner";
 function App() {
 
 const [datos, setDatos] = useState(null);
+const [cuit, setCuit] = useState(null)
 const [cargando, setCargando] = useState(false);
 
-const componente = (cargando) ? <Spinner /> :  <Resultados datos={datos}/>
+const componente = (cargando) ? <Spinner /> :  <Resultados datos={datos} cuit={cuit}/>
   return (
     <Fragment>
       <Header />
       <div className="container bg-secondary py-3 border-redondeado">
         <div className="container ">
-          <BarraBusqueda setDatos={setDatos} setCargando={setCargando}/>
+          <BarraBusqueda setDatos={setDatos} setCuit={setCuit} setCargando={setCargando}/>
       
         </div>
   

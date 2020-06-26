@@ -1,26 +1,53 @@
 import React from "react";
+import Table from "react-bootstrap/Table";
+import moment from "moment";
+import "moment/locale/es";
+const Resultados = ({ datos, cuit }) => {
 
-const Resultados = ({ datos }) => {
+  let formateada;
+  //formatear fecha
+  if (datos.name) {
+     formateada = moment(datos.birthday).format("LL");
+  }
 
   return (
-    <div className="mt-5 py-3 bg-white text-center border-redondeado">
+    <div className="mt-5 p-3 bg-white text-center border-redondeado">
       {datos.name ? (
-        <>
-          <h2>
-            {datos.name} {datos.surname}{" "}
-          </h2>
-          <p>{datos.birthday}</p>
-          {datos.scoring.approved ? (
-            <p>
-              Estado: <span className="bg-success">APROBADO</span>
-            </p>
-          ) : (
-            <p>
-              Estado: <span className="bg-danger">RECHAZADO</span>
-            </p>
-          )}
-          <p>20-14726160-9</p>
-        </>
+        <Table striped bordered hover responsive>
+          <thead>
+            <tr>
+              <th style={{ width: "25%" }}></th>
+              <th className="table-header">
+                {datos.name} {datos.surname}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="font-weight-bold">Fecha de nacimiento</td>
+              <td>{formateada}</td>
+            </tr>
+            <tr>
+              <td className="font-weight-bold">Scoring</td>
+              <td>
+                {" "}
+                {datos.scoring.approved ? (
+                  
+                    <span className="estado-aceptado">APROBADO</span>
+                 
+                ) : (
+                 
+                    <span className="estado-rechazado">RECHAZADO</span>
+                 
+                )}
+              </td>
+            </tr>
+            <tr>
+              <td className="font-weight-bold">CUIT</td>
+              <td>{cuit}</td>
+            </tr>
+          </tbody>
+        </Table>
       ) : (
         <h2>{datos}</h2>
       )}
