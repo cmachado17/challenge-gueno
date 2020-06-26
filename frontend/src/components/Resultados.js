@@ -49,7 +49,7 @@ const Resultados = ({ datos, cuit }) => {
           </tbody>
         </Table>
       ) : (
-        <h2>{datos}</h2>
+        <h3>El ID ingresado no existe en el registro</h3>
       )}
     </div>
   );

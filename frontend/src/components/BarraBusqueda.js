@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
+import Error from './Error';
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -6,6 +7,8 @@ import Col from "react-bootstrap/Col";
 const BarraBusqueda = ({ setDatos, setCargando, setCuit }) => {
   //Estado de valor a buscar
   const [id, setId] = useState("");
+  //Estado de error
+  const [error, setError] = useState(false)
 
   let url = "http://localhost:5000/";
 
@@ -16,6 +19,13 @@ const BarraBusqueda = ({ setDatos, setCargando, setCuit }) => {
 
   const handleEnviarConsulta = (e) => {
     e.preventDefault();
+
+    setDatos(null);
+
+    if(id.length<1){
+      setError(true);
+      return;
+    }
 
     //mostrar spinner
     setCargando(true);
@@ -35,7 +45,6 @@ const BarraBusqueda = ({ setDatos, setCargando, setCuit }) => {
                 .then((response) => response.json())
                 .then((data) => {
                   //enviar los datos para mostrar
-
                   setDatos(data.data);
                 });
             } catch (e) {
@@ -51,25 +60,28 @@ const BarraBusqueda = ({ setDatos, setCargando, setCuit }) => {
     setTimeout(() => {
       setCargando(false);
     }, 3000);
-    //alert(id);
+    setError(false);
   };
 
   return (
+    <Fragment>
+      {error ? <Error /> : null}
     <Form onSubmit={handleEnviarConsulta}>
       <Row>
-        <Col xs={10}>
+        <Col xs={9} className="px-0 ml-0">
           <Form.Control
-            type="text"
+            type="number"
             placeholder="Ingrese un ID"
             value={id}
             onChange={handleId}
           ></Form.Control>
         </Col>
-        <Col xs={2} className="px-0 text-center">
-          <input type="submit" value="Buscar" className="btn btn-danger" />
+        <Col xs={3} className="px-0 text-center">
+          <input type="submit" value="Buscar" className="btn btn-dark" />
         </Col>
       </Row>
     </Form>
+    </Fragment>
   );
 };
 

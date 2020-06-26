@@ -4,11 +4,14 @@ import Header from "./components/Header";
 import BarraBusqueda from "./components/BarraBusqueda";
 import Resultados from "./components/Resultados";
 import Spinner from "./components/Spinner";
+
+
 function App() {
 
 const [datos, setDatos] = useState(null);
 const [cuit, setCuit] = useState(null)
 const [cargando, setCargando] = useState(false);
+
 
 const componente = (cargando) ? <Spinner /> :  <Resultados datos={datos} cuit={cuit}/>
   return (
